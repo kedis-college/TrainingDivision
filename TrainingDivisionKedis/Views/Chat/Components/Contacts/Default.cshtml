@@ -1,0 +1,19 @@
+﻿@model IEnumerable<TrainingDivisionKedis.Core.SPModels.Messages.SPMessagesGetContactsByUser>
+
+<table class="table table-sm table-hover">
+    <tbody>
+        @foreach (var contact in Model)
+        {
+            <tr class="chat-contact" id="@contact.Id">
+                <td class="px-3">
+                    @contact.Name
+                    @if (@contact.NewMessages > 0)
+                    {
+                        <span class="badge badge-success">@contact.NewMessages</span>
+                    }
+                    <br /> @contact.Group
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

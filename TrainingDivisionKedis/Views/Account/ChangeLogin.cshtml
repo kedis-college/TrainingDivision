@@ -1,0 +1,24 @@
+﻿@model TrainingDivisionKedis.ViewModels.Account.ChangeLoginViewModel
+@{
+    ViewData["Title"] = "Изменить логин | Персональные данные";
+}
+
+<h1>Персональные данные</h1>
+
+<h4>Изменить логин</h4>
+<hr />
+
+<partial name="../Shared/_StatusMessages.cshtml" />
+<div class="row">
+    <form class="col-sm-5" method="post">
+        <div class="form-group">
+            <label>Текущий логин</label>
+            <input type="text" class="form-control" asp-for="OldLogin" readonly/>
+        </div>
+        <div class="form-group">
+            <label>Новый логин</label>
+            <input type="text" class="form-control" asp-for="NewLogin" />
+        </div>
+        <input type="submit" value="Сохранить" class="btn btn-primary" />
+    </form>
+</div>

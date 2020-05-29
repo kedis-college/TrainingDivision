@@ -1,0 +1,66 @@
+﻿@model IEnumerable<TrainingDivisionKedis.Core.Models.Year>
+@{
+    ViewData["Title"] = "Распределение нагрузки преподавателей";
+}
+
+<h1>Распределение нагрузки преподавателей</h1>
+
+<partial name="../Shared/_StatusMessages.cshtml" />
+
+<div class="form-inline mb-4">
+    <div class="form-group mx-1">
+        <label>Выберите год:</label>
+        <select id="yearId" class="custom-select my-1 mx-sm-2">
+            @foreach (var year in Model)
+            {
+                <option value="@year.Id" selected="@(year.Current.GetValueOrDefault())">@year.Name</option>
+            }
+        </select>
+    </div>
+    <div class="form-group mx-1">
+        <input type="submit" class="btn btn-primary my-1" value="Показать" id="searchBtn" />
+    </div>   
+</div>
+
+<partial name="_Loader" />
+
+<div id="partialResults">   
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#searchBtn').on('click', function () {
+                let searchParams = $('#yearId').val();
+                console.log(searchParams)
+                $('#loader').removeClass('d-none');
+                $('#partialResults').addClass('d-none');
+                $.ajax({
+                    type: "GET",
+                    url: `/Raspredelenie/RaspredelenieSearch/${searchParams}`,
+                    contentType: "application/json; charset=utf-8",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("XSRF-TOKEN",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                    success: function (response) {
+                        $('#partialResults').removeClass('d-none');
+                        $('#partialResults').html(response);   
+                        $('#table-raspredelenie').filtable({
+                            controlPanel: $('.table-filters')
+                        });
+                    },
+                    failure: function (response) {
+                        alert(response);
+                    },
+                    complete: function () {
+                        $('#loader').addClass('d-none');                        
+                    }
+                });
+            });
+
+        })
+
+    </script>
+}
+

@@ -1,0 +1,38 @@
+﻿@model IEnumerable<TrainingDivisionKedis.Core.SPModels.Messages.SPMessagesGetByUsers>
+@using System.Security.Claims;
+@{ 
+    var MessageClass = "bg-white";
+    var UserId = int.Parse(User.FindFirst(x => x.Type == ClaimTypes.NameIdentifier).Value);
+}
+<div id="messages">
+    @foreach (var message in Model)
+    {
+        @if (message.Recipient == UserId)
+        {
+            MessageClass = "bg-white";
+        }
+        else
+        {
+            MessageClass = "offset-md-2 my-message";
+        }
+        <div class="message-card mb-3 col-md-10 rounded border @MessageClass">
+            <div class="message-card-header border-bottom px-3 py-2 d-flex">
+                <b>
+                    @message.SenderName
+                    @if (!message.Received && message.Recipient == UserId)
+                    {
+                        <span class="badge badge-success">Новое</span>
+                    }
+                </b>
+                <span class="ml-auto">@message.CreatedAt</span>
+            </div>
+            <div class="message-card-body px-3 py-2">
+                <p class="mb-1">@message.Text</p>
+                @if (message.MessageFileName != null)
+                {
+                    <a asp-action="Download" asp-route-id="@message.Id">@message.MessageFileName</a>
+                }
+            </div>
+        </div>
+    }
+</div>

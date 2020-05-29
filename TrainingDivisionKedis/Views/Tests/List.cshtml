@@ -1,0 +1,119 @@
+﻿@model TrainingDivisionKedis.ViewModels.Tests.TestListViewModel
+@{
+    ViewData["Title"] = @Model.SubjectName + " | Тесты";
+}
+
+<h1>Тесты</h1>
+
+<h5>@Model.SubjectName</h5>
+
+<partial name="../Shared/_StatusMessages.cshtml" />
+<div>
+    <a asp-action="Create" asp-route-subjectId="@Model.SubjectId" asp-route-termId="@Model.TermId" class="btn btn-primary my-2">Добавить</a>
+</div>
+
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>
+                Наименование
+            </th>
+            <th>
+                Всего вопросов
+            </th>
+            <th>
+                Вопросов на тест
+            </th>
+            <th>
+                Видимость
+            </th>
+            <th>
+                Продолж.
+            </th>
+            <th>
+                Дата добавления
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var m in Model.Tests)
+        {
+        <tr>
+            <td>@m.Name</td>
+            <td>@m.QuestionsTotal</td>
+            <td>@m.QuestionsPerTest</td>
+            <td style="cursor: pointer">
+                @if (m.Draft)
+                {
+                    <form class="draft-form" method="post">
+                        @Html.Hidden("id", m.Id)
+                        @Html.Hidden("draft", false)
+                        @Html.Hidden("termId", m.TermId)
+                        @Html.Hidden("subjectId", m.SubjectId)
+                        <span class="draft-toggler">
+                            <span class="text-secondary" data-toggle="tooltip" data-placement="top" title="Опубликован">
+                                <i class="fas fa-eye"></i>
+                            </span> |
+                            <span class="text-primary" data-toggle="tooltip" data-placement="top" title="Черновик">
+                                <i class="fas fa-sticky-note"></i>
+                            </span>
+                        </span>
+                    </form>
+                }
+                else
+                {
+                    <form class="visibility-form" method="post">
+                        @Html.Hidden("id", m.Id)
+                        @Html.Hidden("visible", m.Visible)
+                        @Html.Hidden("termId", m.TermId)
+                        @Html.Hidden("subjectId", m.SubjectId)
+                        <span class="visibility-toggler">
+                            <span data-toggle="tooltip" data-placement="top" title="Опубликован" class="@(@m.Visible ? "text-primary" : "text-secondary")">
+                                <i class="fas fa-eye"></i>
+                            </span> |
+                            <span data-toggle="tooltip" data-placement="top" title="Скрыт" class="@(@m.Visible ? "text-secondary" : "text-primary")">
+                                <i class="fas fa-eye-slash"></i>
+                            </span>
+                        </span>
+                    </form>
+                }
+            </td>
+            <td>@m.TimeLimit мин.</td>
+            <td>@m.CreatedAt</td>
+            <td>
+                @if (m.Draft)
+                {
+                    <a href="/Tests/Edit/@m.Id" data-toggle="tooltip" data-placement="top" title="Изменить"><i class="fas fa-edit"></i></a>
+                }
+                else
+                {
+                    <a href="/Tests/Details/@m.Id" data-toggle="tooltip" data-placement="top" title="Просмотр"><i class="fas fa-book-open"></i></a>
+                    <span>&#124; </span>
+                    <a href="/Tests/Results/@m.Id" data-toggle="tooltip" data-placement="top" title="Результаты"><i class="fas fa-chart-bar"></i></a>
+                }
+                <span>&#124; </span><a href="/Tests/Delete/@m.Id" data-toggle="tooltip" data-placement="top" title="Удалить"><i class="fas fa-trash"></i></a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('.visibility-form').on('click', function () {
+                const answer = confirm('Вы действительно хотите изменить видимость теста?')
+                if (answer)
+                    $(this).submit();
+            })
+            $('.draft-form').on('click', function () {
+                const answer = confirm('Вы действительно хотите опубликовать тест? После публикации его нельзя будет редактировать.')
+                if (answer)
+                    $(this).submit();
+            })
+        })
+    </script>
+}
+

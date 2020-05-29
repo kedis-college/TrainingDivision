@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TrainingDivisionKedis</title>
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
+              crossorigin="anonymous"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
+    </environment>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/sidebarStyles.css" />
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="active">
+            <div class="sidebar-header">
+                <img src="~/logo-round.png" alt="кэдис" width="50" />
+                <strong>КЭДИС</strong>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li class="active">
+                    <a asp-controller="Home" asp-action="Index">
+                        <i class="fas fa-home"></i>
+                        <span>Главная</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Vedomost" asp-action="Index">
+                        <i class="fas fa-briefcase"></i>
+                        <span>Ведомость</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Umk" asp-action="Index">
+                        <i class="fas fa-book"></i>
+                        <span>УМК</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Tests" asp-action="Index">
+                        <i class="fas fa-clipboard-check"></i>
+                        <span>Тесты</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Chat" asp-action="Index">
+                        <i class="fas fa-envelope"></i>
+                        <span>Связь со студентами</span>
+                    </a>
+                </li>
+                @if (User.IsInRole("директор") || User.IsInRole("начальник учебного управления"))
+                {
+                    <li>
+                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="fas fa-copy"></i>
+                            <span>Учебное управление</span>
+                        </a>
+                        <ul class="collapse list-unstyled" id="pageSubmenu">
+                            <li>
+                                <a asp-controller="ControlSchedule" asp-action="Index">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <span>График проведения контрольных точек</span>
+                                </a>
+                            </li>
+                            @*<li>
+                        <a asp-controller="Raspredelenie" asp-action="Index">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                            <span>Распределение уч. нагрузки</span>
+                        </a>
+                    </li>*@
+                            @*<li>
+                        <a href="#">Page 3</a>
+                    </li>*@
+                        </ul>
+                    </li>
+                }
+                <li>
+                    <a asp-controller="Account" asp-action="Index">
+                        <i class="fas fa-user"></i>
+                        <span>Пользовательские данные</span>
+                    </a>
+                </li>
+            </ul>
+
+        </nav>
+
+        <!-- Page Content -->
+        <div id="content">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <button type="button" id="sidebarCollapse" class="sidebarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse d-lg-inline-flex flex-lg-row-reverse">
+                    <partial name="_LoginPartial" />
+                </div>
+            </nav>
+            <div class="container-fluid content-flex" id="content-body">
+                @RenderBody()
+            </div>
+
+        </div>
+    </div>
+
+
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
+        </script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
+        </script>
+    </environment>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/filtable.js"></script>
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

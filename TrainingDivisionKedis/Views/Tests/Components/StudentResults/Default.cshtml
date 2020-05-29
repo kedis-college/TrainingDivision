@@ -1,0 +1,21 @@
+﻿@model IEnumerable<TrainingDivisionKedis.Core.Models.TestResult>
+<table class="table table-sm table-bordered">
+    <tr>
+        <th>Тест</th>
+        <th>Баллы</th>
+        <th>Вопросов</th>
+        <th>Дата</th>
+    </tr>
+    @foreach (var total in Model)
+    {
+        <tr>
+            <td>@total.Test.Name</td>
+            <td>@total.Ball </td>
+            <td>@total.Test.QuestionsPerTest </td>
+            <td>@total.CreatedAt</td>
+        </tr>
+    }
+</table>
+
+            
+        

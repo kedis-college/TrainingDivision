@@ -1,0 +1,99 @@
+﻿@model TrainingDivisionKedis.ViewModels.ControlSchedule.CSchIndexViewModel
+
+@{
+    ViewData["Title"] = "График проведения контрольных точек";
+}
+
+<h1>График проведения контрольных точек</h1>
+
+<div>
+    <a class="btn btn-primary my-2" asp-action="Create">Добавить</a>
+</div>
+<partial name="../Shared/_StatusMessages.cshtml" />
+
+<div class="form-inline mb-4 mx">
+    <div class="form-group mx-1">
+        <label>Выберите год:</label>
+        <select id="yearId" class="custom-select my-1 mx-sm-2">
+            @foreach (var year in Model.Years)
+            {
+                <option value="@year.Id" selected="@(year.Current.GetValueOrDefault())">@year.Name</option>
+            }
+        </select>
+    </div>
+    <div class="form-group mx-1">
+        <label>Выберите семестр:</label>
+        <select id="seasonId" class="custom-select my-1 mx-sm-2">
+            @foreach (var term in Model.TermSeasons)
+            {
+                <option value="@term.Id">@term.Name</option>
+            }
+        </select>
+    </div>
+    <input type="submit" class="btn btn-primary my-1" value="Показать" id="searchBtn" />
+</div>
+
+<div id="partialResults">
+</div>
+
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#searchBtn').on('click', function () {
+                let searchParams = {
+                    "YearId": $('#yearId').val(),
+                    "SeasonId": $('#seasonId').val()
+                };
+                $.ajax({
+                    type: "POST",
+                    url: "/ControlSchedule/ControlScheduleSearch/",
+                    contentType: "application/json; charset=utf-8",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("XSRF-TOKEN",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                    data: JSON.stringify(searchParams),
+                    success: function (response) {
+                        $('#partialResults').html(response);
+                    }
+                });
+            });            
+        })
+        function Edit() {
+            let searchParams = {
+                "Id": $('#Id').val(),
+                "YearId": $('#yearId').val(),
+                "SeasonId": $('#seasonId').val(),
+                "DateStart": $('#DateStart').val(),
+                "DateEnd": $('#DateEnd').val(),
+                "Mod1DateStart": $('#Mod1DateStart').val(),
+                "Mod1DateEnd": $('#Mod1DateEnd').val(),
+                "Mod2DateStart": $('#Mod2DateStart').val(),
+                "Mod2DateEnd": $('#Mod2DateEnd').val(),
+                "ItogDateStart": $('#ItogDateStart').val(),
+                "ItogDateEnd": $('#ItogDateEnd').val(),
+                "UserName": "",
+                "Year": null,
+                "Season": null
+            };
+            console.log(searchParams)
+            $.ajax({
+                type: "PUT",
+                url: "/ControlSchedule/Edit/",
+                contentType: "application/json; charset=utf-8",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                data: JSON.stringify(searchParams),
+                success: function (response) {
+                    $('#partialResults').html(response);
+                },
+                error: function (response) {
+                    $('#partialResults').html(response);
+                }
+            });
+        }
+    </script>
+}

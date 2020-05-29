@@ -1,0 +1,49 @@
+﻿@model TrainingDivisionKedis.Student.ViewModels.ProgressInStudy.IndexViewModel
+@{
+    ViewData["Title"] = "Учебная карточка";
+}
+
+<h1>Учебная карточка</h1>
+
+<div class="row bg-light py-2 my-4 mx-0">
+    <div class="col-md-3">Средний балл: <b>@Model.Totals?.AverageGrade</b></div>
+    <div class="col-md-3">GPA: <b>@Model.Totals?.Gpa</b></div>
+    <div class="col-md-6">Всего кредитов: <b>@Model.Totals?.CreditsSum</b></div>
+</div>
+
+@foreach (var progressInStudyOfStudent in Model.ProgressInStudy)
+{
+    <h4 class="text-primary"> Семестр @progressInStudyOfStudent.Term </h4>
+    <table class="table table-sm table-responsive-sm table-bordered">
+        <thead>
+            <tr>
+                <th scope="col" width="40%">Дисциплина</th>
+                <th scope="col">Кредиты</th>
+                <th scope="col">1 модуль</th>
+                <th scope="col">2 модуль</th>
+                <th scope="col">Итог</th>
+                <th scope="col">Доп.балл</th>
+                <th scope="col">Сумма баллов</th>
+                <th scope="col">Оценка</th>
+                <th scope="col">Дата</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var progressInStudy in progressInStudyOfStudent.ProgressInStudy)
+            {
+            <tr>
+                <td>@progressInStudy.SubjectName</td>
+                <td>@progressInStudy.Credits</td>
+                <td>@progressInStudy.Mod1</td>
+                <td>@progressInStudy.Mod2</td>
+                <td>@progressInStudy.Itog</td>
+                <td>@progressInStudy.Dop</td>
+                <td>@progressInStudy.Ball</td>
+                <td>@progressInStudy.PrizeName</td>
+                <td>@(progressInStudy.Date.HasValue ? progressInStudy.Date.GetValueOrDefault().ToShortDateString() : "    -    ")</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+

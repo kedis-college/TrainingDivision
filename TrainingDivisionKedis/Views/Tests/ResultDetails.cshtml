@@ -1,0 +1,37 @@
+﻿@model TrainingDivisionKedis.BLL.DTO.TestsAdmin.TestResultDto
+@{
+    ViewData["Title"] = "Результаты теста | Тесты";
+}
+
+<h1>Результаты теста</h1>
+
+<h4>@Model?.Student?.FullName</h4>
+
+<p class="mt-3">
+    Группа: <b> @Model?.Student?.Group </b> &emsp;
+    Специальность: <b>@Model?.Student?.Speciality </b> <br>
+    Количество правильных ответов: <b>@Model?.TestResult?.Ball </b> &emsp; Всего вопросов: <b> @Model?.TestResult?.TestResultItems?.Count </b> &emsp;
+    Время начала: <b>@Model?.TestResult?.StartedAt </b> &emsp; Время конца: <b> @Model?.TestResult?.FinishedAt </b>
+</p>
+
+<partial name="../Shared/_StatusMessages.cshtml" />
+
+@for (var questionInd = 0; questionInd < Model?.TestResult?.TestResultItems.Count; questionInd++)
+{
+    <div class="question">
+        <div class="mb-2 py-2 border-bottom">
+            <b>Вопрос @(questionInd + 1) : </b> @Model.TestResult.TestResultItems[questionInd].TestQuestion.Text
+        </div>
+        @foreach (var answer in Model.TestResult.TestResultItems[questionInd].TestQuestion.Answers)
+        {
+            <div class="form-group">
+                <div class="form-check @( Model.TestResult.TestResultItems[questionInd].AnswerId == answer.Id && !Model.TestResult.TestResultItems[questionInd].IsCorrect ? "table-danger" : "" ) @( Model.TestResult.TestResultItems[questionInd].TestQuestion.CorrectAnswerId == answer.Id ? "table-success" : "" )">
+                    <input type="radio" disabled checked="@(Model.TestResult.TestResultItems[questionInd].AnswerId == answer.Id)" >
+                    <span>@answer.Text</span>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+

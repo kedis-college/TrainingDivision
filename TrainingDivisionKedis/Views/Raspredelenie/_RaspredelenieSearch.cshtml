@@ -1,0 +1,190 @@
+﻿@model TrainingDivisionKedis.ViewModels.Raspredelenie.IndexViewModel
+@{int i = 1;}
+
+<!-- Фильтры -->
+<div class="table-filters form-row mb-3">
+    <div class="col-sm-2">
+        <input type="text" class="form-control form-control-sm" id="filter-speciality" data-filter-col="1" placeholder="Специальность">
+    </div>
+    <div class="col-sm-1">
+        <input type="text" class="form-control form-control-sm" id="filter-group" data-filter-col="2" placeholder="Группа">
+    </div>
+    <div class="col-sm-1">
+        <select id="filter-term" class="form-control form-control-sm" data-filter-col="4" style="min-width:60px">
+            <option value="">Все</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+        </select>
+    </div>
+    <div class="col-sm-1">
+        <input type="text" class="form-control form-control-sm" id="filter-blok" data-filter-col="5" placeholder="Цикл">
+    </div>
+    <div class="col-sm-3">
+        <input type="text" class="form-control form-control-sm" id="filter-subject" data-filter-col="6" placeholder="Дисциплина">
+    </div>
+    <div class="col-sm-1">
+        <input type="text" class="form-control form-control-sm" id="filter-vid-zan" data-filter-col="7" placeholder="Вид зан.">
+    </div>
+    <div class="col-sm-2">
+        <input type="text" class="form-control form-control-sm" id="filter-teacher" data-filter-col="13" placeholder="Преподаватель">
+    </div>
+</div>
+
+<!-- Таблица распределения-->
+<table class="table table-sm table-bordered" id="table-raspredelenie">
+    <thead>
+        <tr>
+            <th>
+                #
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Raspredelenie.First().Speciality)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Raspredelenie.First().Group)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Raspredelenie.First().SubGroup)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Raspredelenie.First().Term)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Raspredelenie.First().Blok)
+            </th>
+            <th width="30%">
+                @Html.DisplayNameFor(model => model.Raspredelenie.First().Subject)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Raspredelenie.First().VidZan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Raspredelenie.First().Hours)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Raspredelenie.First().Exam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Raspredelenie.First().Kons)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Raspredelenie.First().KursRab)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Raspredelenie.First().TotalHours)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Raspredelenie.First().FIO_Short)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Raspredelenie.First().Obyedinenie)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Raspredelenie)
+        {
+            <tr>
+                <td>
+                    @(i++)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Speciality)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Group)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SubGroup)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Term)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Blok)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Subject)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VidZan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Hours)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Exam)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Kons)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KursRab)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalHours)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FIO_Short)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Obyedinenie)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" data-toggle="modal" data-target="#teachersModalScrollable">
+                        <i class="fas fa-pencil-alt"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Модальное окно -->
+<div class="modal fade" id="teachersModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-sm table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Teachers.First().FIO_Short)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Teachers.First().Post)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Teachers)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FIO_Short)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Post)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>

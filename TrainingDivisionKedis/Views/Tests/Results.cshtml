@@ -1,0 +1,52 @@
+﻿@model TrainingDivisionKedis.BLL.DTO.TestsAdmin.TestResultsListDto
+@{
+    ViewData["Title"] = "Результаты | Тесты";
+    var isAccordion = Model?.Groups.Count > 1 ? "accordion" : "" ;
+}
+
+<h1>Результаты теста </h1>
+
+<h4>@Model?.Test?.Name</h4>
+<hr />
+
+<partial name="../Shared/_StatusMessages.cshtml"/>
+
+<div id="result-groups" class="@isAccordion">
+    @foreach (var group in @Model?.Groups)
+    {
+        <div class="card">
+            <div class="card-header d-flex" id="heading-@group.GroupName" data-toggle="collapse" data-target="#collapse-@group.GroupName" aria-expanded="true" aria-controls="collapse-@group.GroupName" style="cursor: pointer">
+                Группа @group.GroupName
+            </div>
+
+            <div id="collapse-@group.GroupName" class="collapse" aria-labelledby="heading-@group.GroupName" data-parent="#result-groups">
+                <div class="card-body px-3 py-3">
+                    <table class="table table-sm mb-0">
+                        <thead>
+                            <tr>
+                                <th>Студент</th>
+                                <th>Баллы</th>
+                                <th>Время начала</th>
+                                <th>Время конца</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var student in group.TestResults)
+                            {
+                                <tr>
+                                    <td>@student.StudentName</td>
+                                    <td>@student.Ball / @Model.Test.QuestionsPerTest</td>
+                                    <td>@student.StartedAt</td>
+                                    <td>@student.FinishedAt</td>
+                                    <td><a asp-action="ResultDetails" asp-route-id="@student.Id">Просмотр</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>

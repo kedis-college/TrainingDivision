@@ -1,0 +1,173 @@
+﻿@model TrainingDivisionKedis.BLL.DTO.TestsClient.TestDto
+@{
+    ViewData["Title"] = Model?.Name + " | Тесты";
+}
+
+<h1>Тесты</h1>
+
+<h4>@Model?.Name</h4>
+<hr />
+
+<partial name="../Shared/_StatusMessages.cshtml" />
+
+
+<div id="fixed-board" class="bg-white pb-3">
+    Осталось: <b> <span id="timer" class="text-primary"></span> </b> &emsp; Время начала: <b><span id="StartedAt">@Model?.StartedAt?.ToString("yyyy-MM-ddTHH:mm:ss")</span></b> &emsp;
+    Продолжительность: <b> <span id="TimeLimit">@Model?.TimeLimit</span> мин.</b> &emsp; Всего вопросов: <b> @Model?.QuestionsTotal</b>
+</div>
+
+<div class="mb-3">
+    @Html.Hidden("TestId", Model.Id)   
+    @for (var questionInd = 0; questionInd < Model?.Questions.Count; questionInd++)
+    {
+        <div class="question">
+            <div class="mb-2 py-2 border-bottom">
+                <b>Вопрос @(questionInd + 1) : </b> @Model.Questions[questionInd].Text
+            </div>
+            @Html.Hidden("TestResultItems[" + questionInd + "].TestQuestionId", Model.Questions[@questionInd].Id)
+            @foreach (var answer in Model.Questions[questionInd].Answers)
+            {
+                <div class="form-group">
+                    <div class="form-check question-@Model.Questions[@questionInd].Id @(Model.Questions[@questionInd].CheckedAnswer == @answer.Id ? "table-primary" : "")">
+                        <input type="radio" value="@answer.Id" name="TestResultItems[@Model.Questions[@questionInd].Id].AnswerId" checked="@(Model.Questions[@questionInd].CheckedAnswer == @answer.Id)">
+                        <span>@answer.Text</span>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+        <form method="post" asp-action="Finish" id="finish-test-form">
+            @Html.Hidden("TestResultId", Model.TestResultId)
+            <input type="submit" class="btn btn-primary" value="Завершить" />
+        </form>   
+
+</div>
+
+
+@section Scripts {
+    <script>
+
+        var startTimer = function (container) {
+            var minutesToAdd = Number.parseInt($('#TimeLimit').html())
+            var startedAtComp = $('#StartedAt').html().trim();
+            var startedDate = null
+            if (startedAtComp == '')
+                startedDate = new Date();
+            else
+                startedDate = new Date(startedAtComp);
+            $('#StartedAt').html(startedDate.toLocaleString());
+            startedDate.setMinutes(startedDate.getMinutes() + minutesToAdd)
+            startedDate.setSeconds(startedDate.getSeconds() + 1)
+            var countDownDate = startedDate.getTime();
+
+            // Update the count down every 1 second
+            var x = setInterval(function () {
+
+                // Get today's date and time
+                var now = new Date().getTime();
+
+                // Find the distance between now and the count down date
+                var distance = countDownDate - now;
+                // Time calculations for days, hours, minutes and seconds
+                var minutes = Math.floor(distance  / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // Display the result in the element with id="demo"
+                $(container).html(minutes + " мин. " + seconds + " сек. ")
+
+                // If the count down is finished, write some text
+                if (distance < 0) {
+                    clearInterval(x);
+                    $(container).html("Время вышло")
+                    $("#finish-test-form").submit();
+                }
+            }, 1000);
+        }
+
+        var startTestRequest = function(id)
+        {
+            $.ajax({
+                type: "GET",
+                url: `/Tests/Start/${id}`,
+                timeout: 600000,
+                success: async function (res) {
+                    console.log(res)
+                },
+                error: async function (res) {
+                    console.log(res)
+                    const response = res
+                    alert(response.error && response.error.message ? response.error.message : "Ошибка при начинании теста")
+                }
+            });
+        }
+
+        var createResultItemRequest = function (testResultId, questionId){
+            const data = {
+                Id: 0,
+                IsCorrect: false,
+                TestQuestionId: questionId,
+                AnswerId: $(`input[name="TestResultItems[${questionId}].AnswerId"]:checked`).val(),
+                TestResultId: testResultId,
+                TestQuestion: null
+            }
+            console.log(data)
+            $.ajax({
+                type: "POST",
+                url: `/Tests/CreateResultItem/`,
+                contentType: "application/json; charset=utf-8",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                data: JSON.stringify(data),
+                timeout: 600000,
+                success: async function (res) {
+                    console.log(res)
+                },
+                error: async function (res) {
+                    console.log(res)
+                    const response = res
+                    alert(response.error && response.error.message ? response.error.message : "Ошибка при отправке ответа теста")
+                }
+            });
+        }
+
+        var getTestResultId = function () {
+            return $('input[name=TestResultId]').val()
+        }
+
+        $(document).ready(function () {
+
+            var startedAtComp = $('#StartedAt').html().trim();
+            if (startedAtComp == '') {
+                var testResultId = getTestResultId()
+                startTestRequest(testResultId)
+            }
+
+            startTimer($('#timer'))
+
+            $('.form-check').on('click', function () {
+                const classes = $(this).prop('class');
+                const num = classes.split(' ');
+                $(`.${num[1]}`).removeClass('table-primary')
+                $(this).addClass('table-primary')
+                $(this).find('input[type=radio]').prop("checked", true);
+
+                var testResultId = getTestResultId()
+                createResultItemRequest(testResultId, num[1].split('-')[1])
+            })
+
+            var elementPosition = $('#fixed-board').offset();
+
+            $(window).scroll(function () {
+                if ($(window).scrollTop() > elementPosition.top - 16) {
+                    $('#fixed-board').css('position', 'fixed').css('top', '0').css('padding', '1rem 0').css('z-index', 1).addClass('container').addClass('border-bottom');
+                } else {
+                    $('#fixed-board').css('position', 'static').css('padding', '0 0 1rem 0').removeClass('container').removeClass('border-bottom');
+                }
+            });
+        })
+
+    </script>
+}
+

@@ -1,0 +1,47 @@
+﻿@model TrainingDivisionKedis.Student.ViewModels.Umk.UmkDetailsViewModel
+@{
+    ViewData["Title"] = @Model?.SubjectName + " | Учебно-методический комплекс";
+}
+
+<h1>Учебно-методический комплекс</h1>
+
+<h5 class="text-primary mb-3">@Model?.SubjectName</h5>
+
+<partial name="../Shared/_StatusMessages.cshtml" />
+
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>
+                Наименование
+            </th>
+            <th>
+                Размер файла(КБ)
+            </th>
+            <th>
+                Дата добавления
+            </th>
+            <th>
+                Дата обновления
+            </th>
+            <th>
+                Действие
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var m in Model?.UmkFiles)
+        {
+        <tr>
+            <td>@m.Name</td>
+            <td>@m.FileSize</td>
+            <td>@(m.CreatedAt.HasValue ? m.CreatedAt.GetValueOrDefault().ToShortDateString() : "")</td>
+            <td>@(m.UpdatedAt.HasValue ? m.UpdatedAt.GetValueOrDefault().ToShortDateString() : "")</td>
+            <td>
+                <a class="btn btn-sm btn-primary" role="button" href="/umk/download/@m.Id">Скачать</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+

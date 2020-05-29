@@ -1,0 +1,139 @@
+﻿@model IEnumerable<TrainingDivisionKedis.Core.SPModels.ActivityOfTeachers.SPTeacherGetAll>
+
+@{
+    ViewData["Title"] = "Новое сообщение | Связь с преподавателями";
+}
+
+<h1>Связь с преподавателями</h1>
+<h4>Новое сообщение</h4>
+<hr />
+
+<partial name="../Shared/_StatusMessages.cshtml" />
+
+<!-- Фильтры -->
+<div class="table-filters form-row">
+    <div class="col-md-7 col-sm-4 form-group"><h5>Получатели</h5></div>
+    <div class="col-md-3 col-sm-4 form-group">
+        <input type="text" class="form-control form-control-sm" id="filter-student" data-filter-col="1" placeholder="Преподаватель">
+    </div>
+    <div class="col-md-2 col-sm-4 form-group">
+        <input type="text" class="form-control form-control-sm" id="filter-group" data-filter-col="2" placeholder="Должность">
+    </div>
+</div>
+
+
+<!-- Recipients table -->
+<div id="recipients-table" class="mb-2 scroll-content">
+    <table class="table table-sm">
+        <thead>
+            <tr class="bg-light">
+                <th>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="recipients-check-all" />
+                        <label class="form-check-label">Все</label>
+                    </div>
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Post)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="recipients-table-row bg-light">
+                    <td>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input checkbox" name="@item.Id" />
+                        </div>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Post)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<!-- End Recipients table -->
+
+
+<form id="message-form" class="mt-1" method="POST" enctype="multipart/form-data">
+    <div class="form-row">
+        <div class="form-group col-12">
+            <label for="text">Сообщение</label>
+            <textarea maxlength="500" class="form-control" name="Text" id="Text"></textarea>
+        </div>
+        <div class="custom-file form-group col-5 ml-1">
+            <input type="file" class="custom-file-input" name="AppliedFile" id="AppliedFile">
+            <label class="custom-file-label" for="AppliedFile">Выберите файл</label>
+        </div>
+        <div class="col-7 text-right form-group" style="margin-left:-0.25rem;">
+            <input type="submit" class="btn btn-primary" id="send-message-button" value="Отправить" />
+        </div>
+    </div>
+</form>
+
+<div class="pb-3">
+    <a asp-action="Index">Назад к списку</a>
+</div>
+@section Scripts {
+    <script>
+
+        var CheckboxChangeHandler = function () {
+            //uncheck "select all", if one of the listed checkbox item is unchecked
+            if (false == $(this).prop("checked")) { //if this item is unchecked
+                $("#recipients-check-all").prop('checked', false); //change "select all" checked status to false
+            }
+            //check "select all" if all checkbox items are checked
+            if ($('.checkbox:checked').length == ($('.checkbox').length - $(".recipients-table-row.d-none").find('.checkbox').length)) {
+                $("#recipients-check-all").prop('checked', true);
+            }
+        }
+
+        $(document).ready(function () {          
+
+            $('#recipients-check-all').on('change', function () {
+                $(".checkbox").prop('checked', $(this).prop("checked"));
+                $(".recipients-table-row.d-none").find('.checkbox').prop('checked', false);
+            });   
+
+            $('.checkbox').on('change', CheckboxChangeHandler);
+
+            $('#recipients-table table').filtable({
+                controlPanel: $('.table-filters')
+            });
+
+            $('#recipients-table table').on('aftertablefilter', function () {
+                $("#recipients-check-all").prop('checked', false);
+                $('.checkbox:checked').prop('checked', false);
+                $('.checkbox').on('change', CheckboxChangeHandler);
+            });
+
+            $('#send-message-button').click(function () {
+
+                event.preventDefault();
+
+                // Check Recipients
+                if ($('.checkbox:checked').length < 1) {
+                    alert('Выберите получателей!')
+                    return
+                }
+                
+                var form = $('#message-form')[0];
+                $('.checkbox:checked').each((i, obj) => {
+                    console.log($(obj).prop('name'))
+                    $(form).append(`<input type="text" class="d-none" name="Recipients[${i}]" value="${$(obj).prop('name')}">`)
+                })
+
+                $(form).submit();
+            });
+        })
+    </script>
+}

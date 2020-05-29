@@ -1,0 +1,119 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  /*min-height: 100%;*/
+  height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  /*margin-bottom: 60px;
+  height: calc(100vh - 60px);*/
+  height: 100%;
+}
+
+#content-body{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.footer {
+  /*position: absolute;
+  bottom: 0;*/
+  width: 100%;
+  white-space: nowrap;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  line-height: 60px; /* Vertically center the text there */
+}
+
+.content-flex {
+    flex: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.content-flex-row {
+    flex: auto;
+    display: flex;
+    flex-direction: row;
+}
+
+#user-info-list {
+    list-style: none;
+    padding: 0;
+}
+
+#recipients-table {
+    font-size: .8rem;
+}
+
+#chat-section {
+    font-size: .8rem;
+}
+
+.message-card {
+    padding: 0 !important;
+}
+
+.message-card.my-message {
+    border: 1px solid #8fd19e !important;
+    background-color: #d4edda;
+}
+
+.message-card.my-message .message-card-header{
+    border-bottom: 1px solid #8fd19e !important;
+}
+
+.scroll-content {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    height: 150px;
+}
+
+hr {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.question-number {
+    font-weight: 600;
+}

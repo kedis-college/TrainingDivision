@@ -1,0 +1,158 @@
+﻿@model TrainingDivisionKedis.ViewModels.Vedomost.VedDetailsViewModel
+@{
+    ViewData["Title"] = @Model.SpecialityName + " | Ведомость";
+}
+
+<h1>Ведомость</h1>
+
+<partial name="../Shared/_StatusMessages.cshtml">
+
+    <div class="row bg-light py-2 my-2">
+        <div class="col-md-3">Специальность: <b>@Model.SpecialityName</b></div>
+        <div class="col-md-3">Группа: <b>@Model.GroupName</b></div>
+        <div class="col-md-6">Дисциплина: <b>@Model.SubjectName</b></div>
+
+    </div>
+    <div id="prizes-total">
+        @await Component.InvokeAsync("PrizesTotal", new { Id = Model.RaspredelenieId })
+    </div>
+
+    <div class="row">
+        <div class="col-md-5 row my-3">
+            <label class="col-md-3">Дата сдачи:</label>
+            <div class="col-md-9">
+                <input type="date" value="@Model.Date.ToString("yyyy-MM-dd")" id="progressInStudyDate" class="form-control form-control-sm" />
+            </div>
+        </div>
+        <div class="col-md-7 my-3 ">
+            <a class="btn btn-primary btn-sm" asp-action="GetReport" asp-route-id="@Model.RaspredelenieId">Получить отчет <i class="fas fa-print"></i></a>
+        </div>
+    </div>
+
+    <table class="table table-sm table-responsive" id="progress-in-study-table">
+        <thead>
+            <tr>
+                <th scope="col">Номер</th>
+                <th scope="col">ФИО</th>
+                <th scope="col">1 модуль</th>
+                <th scope="col">2 модуль</th>
+                <th scope="col">Итог</th>
+                <th scope="col">Доп.балл</th>
+                <th scope="col">Сумма баллов</th>
+                <th scope="col">Оценка</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ved in Model.ProgressInStudy?.ProgressInStudy)
+            {
+                <tr>
+                    <td>@ved.StudentCode</td>
+                    <td>@ved.StudentFio</td>
+                    <td><input type="text" value="@ved.Mod1" class="form-control form-control-sm ved" id="mod1-@ved.NumRec" readonly="@Model.ProgressInStudy.ControlSchedule.Mod1" /></td>
+                    <td><input type="text" value="@ved.Mod2" class="form-control form-control-sm ved" id="mod2-@ved.NumRec" readonly="@Model.ProgressInStudy.ControlSchedule.Mod2" /></td>
+                    <td><input type="text" value="@ved.Itog" class="form-control form-control-sm ved" id="itog-@ved.NumRec" readonly="@Model.ProgressInStudy.ControlSchedule.Itog" /></td>
+                    <td><input type="text" value="@ved.Dop" class="form-control form-control-sm ved" id="dop-@ved.NumRec" readonly="@Model.ProgressInStudy.ControlSchedule.Itog" /></td>
+                    <td><input type="text" value="@ved.Ball" class="form-control form-control-sm" id="ball-@ved.NumRec" readonly /></td>
+                    <td><input type="text" value="@ved.PrizeName" class="form-control form-control-sm prize" id="prize-@ved.NumRec" readonly /></td>
+                    <td data-toggle="tooltip" data-placement="top" title="Результаты тестов"><button type="button" class="btn btn-primary btn-sm show-test-results-btn" data-toggle="modal" data-target="#StudentResultsModal" id="@ved.Subject-@ved.Student-@ved.Term"><i class="fas fa-clipboard-check"></i></button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="StudentResultsModal" id="StudentResultsModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title">Результаты тестов</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                </div>
+            </div>           
+        </div>
+    </div>
+
+    @section scripts {
+        <script>
+            function Edit(id) {
+                if ($('#progressInStudyDate').val() == '') {
+                    alert('Укажите дату!')
+                    return
+                }
+                let params = {
+                    "NumRec": id,
+                    "Mod1": $(`#mod1-${id}`).val(),
+                    "Mod2": $(`#mod2-${id}`).val(),
+                    "Dop": $(`#dop-${id}`).val(),
+                    "Itog": $(`#itog-${id}`).val(),
+                    "Date": $('#progressInStudyDate').val()
+                }
+                $.ajax({
+                    type: "PUT",
+                    url: `/Vedomost/Edit/`,
+                    contentType: "application/json; charset=utf-8",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("XSRF-TOKEN",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                    data: JSON.stringify(params),
+                    success: function (response) {
+                        if (response.succedeed) {
+                            $(`#ball-${id}`).val(response.entity.ball);
+                            $(`#prize-${id}`).val(response.entity.prizeName);
+                            refreshTotals($("#prizes-total"));
+                        }
+                        else
+                            alert(response.error.message);
+                    },
+                    error: function () {
+                        location.reload();
+                    }
+                });
+            }
+
+            function parseNumber(n) {
+                var f = parseFloat(n); //Convert to float number.
+                return isNaN(f) ? 0 : f; //treat invalid input as 0;
+            }
+
+            var refreshTotals = function (container) {
+                var url = window.location.pathname;
+                var id = url.substring(url.lastIndexOf('/') + 1);
+                $.get("/Vedomost/GetPrizesTotal", { id }, function (data) { container.html(data); });
+            };
+
+            var refreshStudentResults = async function (container, [subjectId, studentId, termId]) {
+                await $.get("/Tests/ResultsBySubjectAndStudent", { subjectId, studentId, termId }, function (data) { container.html(data); });
+            };
+
+            $(document).ready(function () {
+                $('.ved').on('keyup', function (event) {
+                    if (event.keyCode === 13) {
+                        event.preventDefault();
+                        let fullId = event.target.id;
+                        let id = fullId.split('-');
+                        Edit(id[1])
+                        event.target.blur();
+                    }
+                });
+                $('.ved').on('change', function (event) {
+                    event.preventDefault();
+                    let fullId = event.target.id;
+                    let id = fullId.split('-');
+                    Edit(id[1])
+                });
+                $('.show-test-results-btn').on('click', async function () {
+                    const ids = $(this).prop('id');
+                    const idSplitted = ids.split('-');
+                    await refreshStudentResults($('.modal-body'), idSplitted)
+                });
+            })
+        </script>
+    }
+
+
+

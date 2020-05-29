@@ -1,0 +1,42 @@
+﻿@model IEnumerable<TrainingDivisionKedis.BLL.DTO.ControlSchedule.ControlScheduleListDto>
+
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DateStart)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateEnd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdatedAt)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateStart)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateEnd)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedAt)
+            </td>
+            <td>
+                @Html.ActionLink("Изменить", "Edit", new {  id=item.Id }) 
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

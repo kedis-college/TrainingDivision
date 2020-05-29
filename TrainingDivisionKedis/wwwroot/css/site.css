@@ -1,0 +1,140 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+html, body {
+    height: 100%;
+}
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  line-height: 60px; /* Vertically center the text there */
+}
+
+.wrapper {
+    display: flex;
+    width: 100%;
+}
+
+
+
+#content {
+    width: 100%;
+    min-height: 100vh;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+}
+
+#content-body {
+    padding-top: 20px;  
+}
+
+.content-flex {
+    flex: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.content-flex-row {
+    flex: auto;
+    display: flex;
+    flex-direction: row;
+}
+
+#user-info-list {
+    list-style: none;
+    padding: 0;
+}
+
+#table-raspredelenie {
+    font-size: .7rem;
+}
+
+#recipients-table {
+    font-size: .8rem;
+}
+
+#chat-section {
+    font-size: .8rem;
+}
+
+.message-card {
+    padding: 0 !important;
+}
+
+    .message-card.my-message {
+        border: 1px solid #8fd19e !important;
+        background-color: #d4edda;
+    }
+
+        .message-card.my-message .message-card-header {
+            border-bottom: 1px solid #8fd19e !important;
+        }
+
+
+.scroll-content {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    height: 150px;
+}
+
+hr {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.question-number {
+    font-weight: 600;
+}
+
+#result-groups .card-header {
+    margin-bottom: -1px;
+}
+
+#result-groups > .card {
+    overflow: hidden;
+}

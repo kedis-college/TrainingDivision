@@ -1,0 +1,13 @@
+﻿@using System.Security.Claims;
+@{
+    ViewData["Title"] = "Пользовательские данные";
+}
+<h1>Пользовательские данные</h1>
+
+<h4>@User.FindFirst(x => x.Type == ClaimTypes.Surname).Value</h4>
+<hr />
+<ul id="user-info-list">
+    <li><b>Логин: </b> @User.Identity.Name</li>
+    <li><b>Пароль: </b> <a asp-action="ChangePassword">Изменить</a></li>
+</ul>
+

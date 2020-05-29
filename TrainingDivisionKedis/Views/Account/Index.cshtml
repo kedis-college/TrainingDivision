@@ -1,0 +1,19 @@
+﻿@using System.Security.Claims;
+@{
+    ViewData["Title"] = "Пользовательские данные";
+}
+
+<h1>Пользовательские данные</h1>
+
+<h4>@User.FindFirst(x => x.Type == ClaimTypes.Surname).Value</h4>
+
+@foreach (var role in @User.FindAll(x => x.Type == ClaimTypes.Role))
+{
+    <p class="mb-0">@role.Value</p>
+}
+
+<hr/>
+<ul id="user-info-list">
+    <li><b>Логин: </b> @User.Identity.Name <a asp-action="ChangeLogin">Изменить</a></li>
+    <li><b>Пароль: </b> <a asp-action="ChangePassword">Изменить</a></li>
+</ul>

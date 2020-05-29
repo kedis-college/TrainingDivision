@@ -1,0 +1,27 @@
+﻿@model IEnumerable<TrainingDivisionKedis.Core.SPModels.Raspredelenie.SPRaspredelenieGetByYearAndTermAndUser>
+
+<table class="table table-sm table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Год</th>
+            <th scope="col">Семестр</th>
+            <th scope="col">Специальность</th>
+            <th scope="col">Группа</th>
+            <th scope="col">Дисциплина</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ved in Model)
+        {
+            <tr onclick="location.href='@Url.Action("Edit", "Vedomost", new { id = ved.Id })'">
+                <td>@ved.YearName</td>
+                <td>@ved.Semestr</td>
+                <td>@ved.SpecialityName</td>
+                <td>@ved.GroupName</td>
+                <td>@ved.SubjectName</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+    @*onclick="ShowDetails(@ved.Id)"*@

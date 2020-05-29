@@ -1,0 +1,51 @@
+﻿@model IEnumerable<TrainingDivisionKedis.Core.Models.Term>
+@{
+    ViewData["Title"] = "Тесты";
+}
+
+<h1>Тесты</h1>
+
+<div class="form-inline mb-4">
+    <div class="form-group mx-1">
+        <label>Выберите семестр:</label>
+        <select id="termId" class="custom-select my-1 mx-sm-2">
+            @foreach (var term in Model)
+            {
+                <option value="@term.Id">@term.Id</option>
+            }
+        </select>
+    </div>
+    <input type="submit" class="btn btn-primary my-1" value="Показать" id="searchBtn" />
+</div>
+
+<div id="partialResults">
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#searchBtn').on('click', function () {
+                let searchParams = $('#termId').val();
+                console.log(searchParams)
+                $.ajax({
+                    type: "POST",
+                    url: "/Tests/SubjectsSearch/",
+                    contentType: "application/json; charset=utf-8",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("XSRF-TOKEN",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                    data: JSON.stringify(searchParams),
+                    success: function (response) {
+                        $('#partialResults').html(response);
+                    },
+                    failure: function (response) {
+                        alert(response);
+                    }
+                });
+            });
+
+        })
+
+    </script>
+}

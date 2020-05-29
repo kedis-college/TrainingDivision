@@ -1,0 +1,8 @@
+﻿@model IEnumerable<TrainingDivisionKedis.BLL.DTO.ProgressInStudy.TotalsDto>
+
+<div class="row py-2 my-2 bg-light">
+@foreach (var total in Model)
+{
+    <div class="col-md-2">@total.Name : <b> @total.Value </b></div>
+}
+</div>

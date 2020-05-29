@@ -1,0 +1,21 @@
+﻿@model IEnumerable<TrainingDivisionKedis.Core.SPModels.Raspredelenie.SPSubjectsGetByYearAndTermAndUser>
+
+<table class="table table-sm table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Код</th>
+            <th scope="col">Дисциплина</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ved in Model)
+        {
+            <tr onclick="location.href='@Url.Action("Details", "Umk", new { subjectId = ved.SubjectId, termId = ved.Semestr })'">
+                <td>@ved.SubjectId</td>               
+                <td>@ved.SubjectName</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@*onclick="ShowDetails(@ved.SubjectId)"*@

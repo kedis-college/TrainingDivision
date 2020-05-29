@@ -1,0 +1,88 @@
+﻿@model TrainingDivisionKedis.ViewModels.ControlSchedule.CSchCreateViewModel
+@using TrainingDivisionKedis.Extensions.Helpers
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Добавить новый | График проведения контрольных точек";
+}
+
+<h1>График проведения контрольных точек</h1>
+
+<h4>Добавить новый</h4>
+<hr />
+
+<partial name="../Shared/_StatusMessages.cshtml" />
+
+<div class="row">  
+    <div class="col-md-6">
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="form-group col-sm-6">
+                @Html.RequiredLabelFor(p => p.ControlSchedule.YearId)
+                <select asp-for="ControlSchedule.YearId" class="form-control" asp-items="Model.Years"></select>
+            </div>
+            <div class="form-group col-sm-6">
+                @Html.RequiredLabelFor(p => p.ControlSchedule.SeasonId)
+                <select asp-for="ControlSchedule.SeasonId" class="form-control" asp-items="Model.TermSeasons"></select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-6">
+                @Html.RequiredLabelFor(p => p.ControlSchedule.DateStart)
+                <input asp-for="ControlSchedule.DateStart" type="datetime-local" class="form-control" />
+                <span asp-validation-for="ControlSchedule.DateStart" class="text-danger"></span>
+            </div>
+            <div class="form-group col-sm-6">
+                @Html.RequiredLabelFor(p => p.ControlSchedule.DateEnd)
+                <input asp-for="ControlSchedule.DateEnd" class="form-control" />
+                <span asp-validation-for="ControlSchedule.DateEnd" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-6">
+                @Html.RequiredLabelFor(p => p.ControlSchedule.Mod1DateStart)
+                <input asp-for="ControlSchedule.Mod1DateStart" class="form-control" />
+                <span asp-validation-for="ControlSchedule.Mod1DateStart" class="text-danger"></span>
+            </div>
+            <div class="form-group col-sm-6">
+                @Html.RequiredLabelFor(p => p.ControlSchedule.Mod1DateEnd)
+                <input asp-for="ControlSchedule.Mod1DateEnd" class="form-control" />
+                <span asp-validation-for="ControlSchedule.Mod1DateEnd" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-6">
+                @Html.RequiredLabelFor(p => p.ControlSchedule.Mod2DateStart)
+                <input asp-for="ControlSchedule.Mod2DateStart" class="form-control" />
+                <span asp-validation-for="ControlSchedule.Mod2DateStart" class="text-danger"></span>
+            </div>
+            <div class="form-group col-sm-6">
+                @Html.RequiredLabelFor(p => p.ControlSchedule.Mod2DateEnd)
+                <input asp-for="ControlSchedule.Mod2DateEnd" class="form-control" />
+                <span asp-validation-for="ControlSchedule.Mod2DateEnd" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-6">
+                @Html.RequiredLabelFor(p => p.ControlSchedule.ItogDateStart)
+                <input asp-for="ControlSchedule.ItogDateStart" class="form-control" />
+                <span asp-validation-for="ControlSchedule.ItogDateStart" class="text-danger"></span>
+            </div>
+            <div class="form-group col-sm-6">
+                @Html.RequiredLabelFor(p => p.ControlSchedule.ItogDateEnd)
+                <input asp-for="ControlSchedule.ItogDateEnd" class="form-control" />
+                <span asp-validation-for="ControlSchedule.ItogDateEnd" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Добавить" class="btn btn-primary" />
+            <a class="btn btn-secondary" asp-action="Index">Отмена</a>
+        </div>        
+    </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

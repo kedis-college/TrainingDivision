@@ -1,0 +1,43 @@
+﻿@model TrainingDivisionKedis.Core.Models.UmkFile
+
+@{
+    ViewData["Title"] = "Изменить | Учебно-методический комплекс";
+}
+
+<h1>Учебно-методический комплекс</h1>
+
+<h4>Изменить</h4>
+<hr />
+<partial name="../Shared/_StatusMessages.cshtml" />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit" enctype="multipart/form-data" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label class="control-label">Наименование</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Наименование файла</label>
+                <input asp-for="FileName" class="form-control" readonly/>
+            </div>
+            <div class="form-group custom-file mb-3">
+                <input type="file" class="custom-file-input" name="UmkFile">
+                <label class="custom-file-label" for="customFile">Выберите новый файл</label>
+            </div>
+            <div class="form-group ">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Details" asp-route-subjectId="@Model.SubjectId" asp-route-termId="@Model.TermId">Назад</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

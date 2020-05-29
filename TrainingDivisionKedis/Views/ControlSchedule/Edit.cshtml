@@ -1,0 +1,95 @@
+﻿@model TrainingDivisionKedis.BLL.DTO.ControlSchedule.ControlScheduleDto
+@using TrainingDivisionKedis.Extensions.Helpers
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Изменить | График проведения контрольных точек";
+}
+
+<h1>График проведения контрольных точек</h1>
+
+<h4>Изменить</h4>
+<hr />
+
+<partial name="../Shared/_StatusMessages.cshtml" />
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit">
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="YearId" />
+            <input type="hidden" asp-for="SeasonId" />
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    @Html.RequiredLabelFor(p => p.YearId)
+                    <input class="form-control" name="PartialYearId" id="PartialYearId" value="@Model.Year.Name" readonly />
+                    <span asp-validation-for="YearId" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    @Html.RequiredLabelFor(p => p.SeasonId)
+                    <input class="form-control" name="PartialSeasonId" id="PartialSeasonId" value="@Model.Season.Name" readonly />
+                    <span asp-validation-for="SeasonId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    @Html.RequiredLabelFor(p => p.DateStart)
+                    <input asp-for="DateStart" type="datetime-local" class="form-control" />
+                    <span asp-validation-for="DateStart" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    @Html.RequiredLabelFor(p => p.DateEnd)
+                    <input asp-for="DateEnd" class="form-control">
+                    <span asp-validation-for="DateEnd" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    @Html.RequiredLabelFor(p => p.Mod1DateStart)
+                    <input asp-for="Mod1DateStart" class="form-control" />
+                    <span asp-validation-for="Mod1DateStart" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    @Html.RequiredLabelFor(p => p.Mod1DateEnd)
+                    <input asp-for="Mod1DateEnd" class="form-control" />
+                    <span asp-validation-for="Mod1DateEnd" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    @Html.RequiredLabelFor(p => p.Mod2DateStart)
+                    <input asp-for="Mod2DateStart" class="form-control" />
+                    <span asp-validation-for="Mod2DateStart" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    @Html.RequiredLabelFor(p => p.Mod2DateEnd)
+                    <input asp-for="Mod2DateEnd" class="form-control" />
+                    <span asp-validation-for="Mod2DateEnd" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    @Html.RequiredLabelFor(p => p.ItogDateStart)
+                    <input asp-for="ItogDateStart" class="form-control" />
+                    <span asp-validation-for="ItogDateStart" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-6">
+                    @Html.RequiredLabelFor(p => p.ItogDateEnd)
+                    <input asp-for="ItogDateEnd" class="form-control" />
+                    <span asp-validation-for="ItogDateEnd" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="mb-3">
+    <a asp-action="Index">Назад</a>
+</div>
+
+

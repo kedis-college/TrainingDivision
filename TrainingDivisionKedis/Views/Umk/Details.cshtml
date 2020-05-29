@@ -1,0 +1,64 @@
+﻿@model TrainingDivisionKedis.ViewModels.Umk.UmkDetailsViewModel
+@{
+    ViewData["Title"] = @Model?.SubjectName + " | Учебно-методический комплекс";
+}
+
+<h1>Учебно-методический комплекс</h1>
+
+<h5>@Model?.SubjectName</h5>
+
+<partial name="../Shared/_StatusMessages.cshtml" />
+<form enctype="multipart/form-data" class="mt-4" method="post" asp-action="Details">
+    @Html.HiddenFor(x => x.SubjectId)
+    @Html.HiddenFor(x => x.TermId)
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <input type="text" class="form-control" name="Name" placeholder="Введите наименование" />
+        </div>
+        <div class="custom-file form-group col-md-3">
+            <input type="file" class="custom-file-input" name="UmkFile">
+            <label class="custom-file-label" for="customFile">Выберите файл</label>
+        </div>
+        <div class="form-group col-md">
+            <input type="submit" class="btn btn-primary" value="Добавить" />
+        </div>
+    </div>
+</form>
+
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>
+                Наименование
+            </th>
+            <th>
+                Размер файла(КБ)
+            </th>
+            <th>
+                Дата добавления
+            </th>
+            <th>
+                Дата обновления
+            </th>
+            <th>                
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var m in Model?.UmkFiles)
+        {
+        <tr>
+            <td>@m.Name</td>
+            <td>@m.FileSize</td>
+            <td>@m.CreatedAt</td>
+            <td>@m.UpdatedAt</td>
+            <td>
+                <a href="/umk/download/@m.Id">Скачать</a> |
+                <a href="/umk/edit/@m.Id">Изменить</a> |
+                <a href="/umk/delete/@m.Id">Удалить</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+

@@ -1,0 +1,32 @@
+﻿@model TrainingDivisionKedis.Core.Models.Test
+@{
+    ViewData["Title"] = Model?.Name + " | Тесты";
+}
+
+<h1>Тесты</h1>
+
+<h4>@Model?.Name</h4>
+<hr />
+
+<partial name="../Shared/_StatusMessages.cshtml" />
+
+<p>Всего вопросов: <b>@Model?.QuestionsTotal</b> &emsp; Вопросов на тест: <b>@Model?.QuestionsPerTest</b>  &emsp; Продолжительность: <b>@Model?.TimeLimit мин.</b></p>
+
+@for (var questionInd = 0; questionInd < Model?.Questions.Count; questionInd++)
+{
+    <div class="question">
+        <div class="mb-2 py-2 border-bottom">
+            <b>Вопрос @(questionInd + 1) : </b> @Model.Questions[questionInd].Text
+        </div>
+        @foreach (var answer in Model.Questions[questionInd].Answers)
+        {
+            <div class="form-group">
+                <div class="form-check @( Model.Questions[questionInd].CorrectAnswerId == answer.Id ? "table-success" : "" )">
+                    <input type="radio" value="@answer.Id" disabled checked="@(Model.Questions[questionInd].CorrectAnswerId == answer.Id)" aria-label="Radio button for following text input">
+                    <span>@answer.Text</span>
+                </div>
+            </div>
+        }
+    </div>
+}
+
