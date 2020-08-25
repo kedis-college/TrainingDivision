@@ -45,11 +45,11 @@
 @section Scripts {
     <script>
         var refreshMessages = async function (container, id) {
-            await $.get("/Chat/GetMessagesByUsers", { id }, function (data) { container.html(data); })
+            await $.get("@Url.Action("GetMessagesByUsers", "Chat")", { id }, function (data) { container.html(data); })
         };
 
         var refreshContacts = async function (container) {
-            await $.get("/Chat/GetContacts", function (data) { container.html(data); });
+            await $.get("@Url.Action("GetContacts", "Chat")", function (data) { container.html(data); });
         };
 
         var scrollMessagesToBottom = function () {
@@ -100,8 +100,8 @@
             $.ajax({
                 type: "POST",
                 enctype: 'multipart/form-data',
-                url: `/Chat/CreateAjax/`,
-                data: data,
+                url: "@Url.Action("CreateAjax", "Chat")",
+                data,
                 processData: false,
                 contentType: false,
                 cache: false,
@@ -128,7 +128,7 @@
 
             $('#chat-contacts-table table').on('aftertablefilter', function () {
                 $('.chat-contact').on('click', chatContactClickHandler);
-            });           
+            });
         }
 
         $(document).ready(function () {

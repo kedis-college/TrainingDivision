@@ -88,7 +88,7 @@
         {
             $.ajax({
                 type: "GET",
-                url: `/Tests/Start/${id}`,
+                url: "@Url.Action("Start", "Tests")/" + id,
                 timeout: 600000,
                 success: async function (res) {
                     console.log(res)
@@ -113,7 +113,7 @@
             console.log(data)
             $.ajax({
                 type: "POST",
-                url: `/Tests/CreateResultItem/`,
+                url: "@Url.Action("CreateResultItem", "Tests")",
                 contentType: "application/json; charset=utf-8",
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader("XSRF-TOKEN",

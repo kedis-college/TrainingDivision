@@ -38,7 +38,7 @@
             <td>@(m.CreatedAt.HasValue ? m.CreatedAt.GetValueOrDefault().ToShortDateString() : "")</td>
             <td>@(m.UpdatedAt.HasValue ? m.UpdatedAt.GetValueOrDefault().ToShortDateString() : "")</td>
             <td>
-                <a class="btn btn-sm btn-primary" role="button" href="/umk/download/@m.Id">Скачать</a>
+                <a class="btn btn-sm btn-primary" role="button" asp-action="Download" asp-controller="Umk" asp-route-id="@m.Id">Скачать</a>
             </td>
         </tr>
         }

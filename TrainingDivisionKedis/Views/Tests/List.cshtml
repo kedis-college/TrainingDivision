@@ -85,15 +85,15 @@
             <td>
                 @if (m.Draft)
                 {
-                    <a href="/Tests/Edit/@m.Id" data-toggle="tooltip" data-placement="top" title="Изменить"><i class="fas fa-edit"></i></a>
+                    <a asp-action="Edit" asp-controller="Tests" asp-route-id="@m.Id" data-toggle="tooltip" data-placement="top" title="Изменить"><i class="fas fa-edit"></i></a>
                 }
                 else
                 {
-                    <a href="/Tests/Details/@m.Id" data-toggle="tooltip" data-placement="top" title="Просмотр"><i class="fas fa-book-open"></i></a>
+                    <a asp-action="Details" asp-controller="Tests" asp-route-id="@m.Id" data-toggle="tooltip" data-placement="top" title="Просмотр"><i class="fas fa-book-open"></i></a>
                     <span>&#124; </span>
-                    <a href="/Tests/Results/@m.Id" data-toggle="tooltip" data-placement="top" title="Результаты"><i class="fas fa-chart-bar"></i></a>
+                    <a asp-action="Results" asp-controller="Tests" asp-route-id="@m.Id" data-toggle="tooltip" data-placement="top" title="Результаты"><i class="fas fa-chart-bar"></i></a>
                 }
-                <span>&#124; </span><a href="/Tests/Delete/@m.Id" data-toggle="tooltip" data-placement="top" title="Удалить"><i class="fas fa-trash"></i></a>
+                <span>&#124; </span><a asp-action="Delete" asp-controller="Tests" asp-route-id="@m.Id" data-toggle="tooltip" data-placement="top" title="Удалить"><i class="fas fa-trash"></i></a>
             </td>
         </tr>
         }

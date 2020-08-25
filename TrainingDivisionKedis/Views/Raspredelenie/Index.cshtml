@@ -37,7 +37,7 @@
                 $('#partialResults').addClass('d-none');
                 $.ajax({
                     type: "GET",
-                    url: `/Raspredelenie/RaspredelenieSearch/${searchParams}`,
+                    url: "@Url.Action("RaspredelenieSearch", "Raspredelenie")/" + searchParams,
                     contentType: "application/json; charset=utf-8",
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader("XSRF-TOKEN",

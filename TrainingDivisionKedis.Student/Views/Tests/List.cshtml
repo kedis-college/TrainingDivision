@@ -38,11 +38,11 @@
                 {
                     @if (m.StartedAt.HasValue)
                     {
-                        <a class="btn btn-sm btn-primary" href="/Tests/Details/@m.Id">Продолжить</a>
+                        <a class="btn btn-sm btn-primary" asp-action="Details" asp-controller="Tests" asp-route-id="@m.Id">Продолжить</a>
                     }
                     else
                     {
-                        <a class="btn btn-sm btn-primary" href="/Tests/Details/@m.Id">Пройти</a>
+                        <a class="btn btn-sm btn-primary" asp-action="Details" asp-controller="Tests" asp-route-id="@m.Id">Пройти</a>
                     }
                 }
                 else

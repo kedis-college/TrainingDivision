@@ -29,7 +29,7 @@
                 console.log(searchParams)
                 $.ajax({
                     type: "POST",
-                    url: "/Tests/SubjectsSearch/",
+                    url: "@Url.Action("SubjectsSearch", "Tests")",
                     contentType: "application/json; charset=utf-8",
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader("XSRF-TOKEN",

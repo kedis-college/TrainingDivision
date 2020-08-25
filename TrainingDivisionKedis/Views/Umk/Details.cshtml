@@ -53,9 +53,9 @@
             <td>@m.CreatedAt</td>
             <td>@m.UpdatedAt</td>
             <td>
-                <a href="/umk/download/@m.Id">Скачать</a> |
-                <a href="/umk/edit/@m.Id">Изменить</a> |
-                <a href="/umk/delete/@m.Id">Удалить</a>
+                <a asp-action="Download" asp-controller="Umk" asp-route-id="@m.Id">Скачать</a> |
+                <a asp-action="Edit" asp-controller="Umk" asp-route-id="@m.Id">Изменить</a> |
+                <a asp-action="Delete" asp-controller="Umk" asp-route-id="@m.Id">Удалить</a>
             </td>
         </tr>
         }

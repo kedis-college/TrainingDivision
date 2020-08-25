@@ -40,7 +40,7 @@
                 };
                 $.ajax({
                     type: "POST",
-                    url: "/Umk/SubjectsSearch/",
+                    url: "@Url.Action("SubjectsSearch", "Umk")",
                     contentType: "application/json; charset=utf-8",
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader("XSRF-TOKEN",

@@ -42,7 +42,7 @@
                     };
                     $.ajax({
                         type: "POST",
-                        url: "/Vedomost/VedomostSearch/",
+                        url: "@Url.Action("VedomostSearch", "Vedomost")",
                         contentType: "application/json; charset=utf-8",
                         beforeSend: function (xhr) {
                             xhr.setRequestHeader("XSRF-TOKEN",
@@ -63,7 +63,7 @@
             function ShowDetails(raspId) {
                 $.ajax({
                     type: "GET",
-                    url: `/Vedomost/Details/${raspId}`,
+                    url: "@Url.Action("Details", "Vedomost")/" + raspId,
                     contentType: "application/json; charset=utf-8",
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader("XSRF-TOKEN",

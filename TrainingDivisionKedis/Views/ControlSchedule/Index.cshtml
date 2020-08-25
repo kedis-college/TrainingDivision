@@ -47,7 +47,7 @@
                 };
                 $.ajax({
                     type: "POST",
-                    url: "/ControlSchedule/ControlScheduleSearch/",
+                    url: "@Url.Action("ControlScheduleSearch", "ControlSchedule")",
                     contentType: "application/json; charset=utf-8",
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader("XSRF-TOKEN",
@@ -80,7 +80,7 @@
             console.log(searchParams)
             $.ajax({
                 type: "PUT",
-                url: "/ControlSchedule/Edit/",
+                url: "@Url.Action("Edit", "ControlSchedule")",
                 contentType: "application/json; charset=utf-8",
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader("XSRF-TOKEN",
