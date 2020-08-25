@@ -71,7 +71,7 @@ namespace TrainingDivisionKedis.BLL.Tests
             var mockFileService = new Mock<IOptions<ReportsConfiguration>>();
             mockFileService
                 .SetupGet(f => f.Value)
-                .Returns(new ReportsConfiguration { BaseDirectory = @"C:\Users\E7450\Downloads\VKR\TrainingDivisionKedis\TrainingDivisionKedis.BLL.Tests\bin\Debug\netcoreapp2.2\ReportTemplates\", VedomostTemplate = @"VedomostTemplate.txt" });
+                .Returns(new ReportsConfiguration { BaseDirectory = @"C:\Users\E7450\source\repos\TrainingDivision\TrainingDivisionKedis.BLL.Tests\bin\Debug\netcoreapp2.2\ReportTemplates\", VedomostTemplate = @"VedomostTemplate.txt" });
             Assert.Throws<ArgumentNullException>(() => _sut = new VedomostReportService(null, mockFileService.Object));
         }
 
@@ -105,7 +105,7 @@ namespace TrainingDivisionKedis.BLL.Tests
                 .Setup(p => p.GetTotalsByRaspredelenie(It.IsAny<int>()))
                 .ReturnsAsync(GetTestTotals());
 
-            var reportsConfiguration = new ReportsConfiguration { BaseDirectory = @"C:\Users\E7450\Downloads\VKR\TrainingDivisionKedis\TrainingDivisionKedis.BLL.Tests\bin\Debug\netcoreapp2.2\ReportTemplates\", VedomostTemplate = @"VedomostTemplate.docx" };
+            var reportsConfiguration = new ReportsConfiguration { BaseDirectory = @"C:\Users\E7450\source\repos\TrainingDivision\TrainingDivisionKedis.BLL.Tests\bin\Debug\netcoreapp2.2\ReportTemplates\", VedomostTemplate = @"VedomostTemplate.docx" };
             IOptions<ReportsConfiguration> options = Options.Create(reportsConfiguration);
 
             var mockContextFactory = SetupContextFactory(mockProgressInStudyQuery.Object);
@@ -132,7 +132,7 @@ namespace TrainingDivisionKedis.BLL.Tests
                 .Setup(p => p.GetTotalsByRaspredelenie(It.IsAny<int>()))
                 .ReturnsAsync(GetTestTotals());
 
-            var reportsConfiguration = new ReportsConfiguration { BaseDirectory = @"C:\Users\E7450\Downloads\VKR\TrainingDivisionKedis\TrainingDivisionKedis.BLL.Tests\bin\Debug\netcoreapp2.2\ReportTemplates\", VedomostTemplate = @"VedomostTemplate.docx" };
+            var reportsConfiguration = new ReportsConfiguration { BaseDirectory = @"C:\Users\E7450\source\repos\TrainingDivision\TrainingDivisionKedis.BLL.Tests\bin\Debug\netcoreapp2.2\ReportTemplates\", VedomostTemplate = @"VedomostTemplate.docx" };
             IOptions<ReportsConfiguration> options = Options.Create(reportsConfiguration);
 
             var mockContextFactory = SetupContextFactory(mockProgressInStudyQuery.Object);
@@ -157,7 +157,7 @@ namespace TrainingDivisionKedis.BLL.Tests
                 .Setup(p => p.GetTotalsByRaspredelenie(It.IsAny<int>()))
                 .ReturnsAsync(new List<SPProgressInStudyGetTotals>());
 
-            var reportsConfiguration = new ReportsConfiguration { BaseDirectory = @"C:\Users\E7450\Downloads\VKR\TrainingDivisionKedis\TrainingDivisionKedis.BLL.Tests\bin\Debug\netcoreapp2.2\ReportTemplates\", VedomostTemplate = @"VedomostTemplate.docx" };
+            var reportsConfiguration = new ReportsConfiguration { BaseDirectory = @"C:\Users\E7450\source\repos\TrainingDivision\TrainingDivisionKedis.BLL.Tests\bin\Debug\netcoreapp2.2\ReportTemplates\", VedomostTemplate = @"VedomostTemplate.docx" };
             IOptions<ReportsConfiguration> options = Options.Create(reportsConfiguration);
 
             var mockContextFactory = SetupContextFactory(mockProgressInStudyQuery.Object);
@@ -182,7 +182,7 @@ namespace TrainingDivisionKedis.BLL.Tests
                 .Setup(p => p.GetTotalsByRaspredelenie(It.IsAny<int>()))
                 .ReturnsAsync(new List<SPProgressInStudyGetTotals>());
 
-            var reportsConfiguration = new ReportsConfiguration { BaseDirectory = @"C:\Users\E7450\Downloads\VKR\TrainingDivisionKedis\TrainingDivisionKedis.BLL.Tests\bin\Debug\netcoreapp2.2\ReportTemplates\", VedomostTemplate = @"VedomostTemplate.docx" };
+            var reportsConfiguration = new ReportsConfiguration { BaseDirectory = @"C:\Users\E7450\source\repos\TrainingDivision\TrainingDivisionKedis.BLL.Tests\bin\Debug\netcoreapp2.2\ReportTemplates\", VedomostTemplate = @"VedomostTemplate.docx" };
             IOptions<ReportsConfiguration> options = Options.Create(reportsConfiguration);
 
             var mockContextFactory = SetupContextFactory(mockProgressInStudyQuery.Object);
@@ -207,7 +207,7 @@ namespace TrainingDivisionKedis.BLL.Tests
                 .Setup(p => p.GetTotalsByRaspredelenie(It.IsAny<int>()))
                 .ThrowsAsync(new Exception("Mock exception"));
 
-            var reportsConfiguration = new ReportsConfiguration { BaseDirectory = @"C:\Users\E7450\Downloads\VKR\TrainingDivisionKedis\TrainingDivisionKedis.BLL.Tests\bin\Debug\netcoreapp2.2\ReportTemplates\", VedomostTemplate = @"VedomostTemplate.docx" };
+            var reportsConfiguration = new ReportsConfiguration { BaseDirectory = @"C:\Users\E7450\source\repos\TrainingDivision\TrainingDivisionKedis.BLL.Tests\bin\Debug\netcoreapp2.2\ReportTemplates\", VedomostTemplate = @"VedomostTemplate.docx" };
             IOptions<ReportsConfiguration> options = Options.Create(reportsConfiguration);
 
             var mockContextFactory = SetupContextFactory(mockProgressInStudyQuery.Object);

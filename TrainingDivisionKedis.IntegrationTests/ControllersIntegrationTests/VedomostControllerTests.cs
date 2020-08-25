@@ -96,7 +96,7 @@ namespace TrainingDivisionKedis.Tests.ControllersIntegrationTests
             };
         }
 
-        public static IOptions<ReportsConfiguration> SetupReportConfiguration(string baseDirectory = @"C:\Users\E7450\Downloads\VKR\TrainingDivisionKedis\TrainingDivisionKedis.BLL.Tests\bin\Debug\netcoreapp2.2\ReportTemplates\", string vedomostTemplate = @"VedomostTemplate.docx")
+        public static IOptions<ReportsConfiguration> SetupReportConfiguration(string baseDirectory = @"C:\Users\E7450\source\repos\TrainingDivision\TrainingDivisionKedis.BLL.Tests\bin\Debug\netcoreapp2.2\ReportTemplates\", string vedomostTemplate = @"VedomostTemplate.docx")
         {
             var reportsConfiguration = new ReportsConfiguration { BaseDirectory = baseDirectory, VedomostTemplate = vedomostTemplate };
             return Options.Create(reportsConfiguration);

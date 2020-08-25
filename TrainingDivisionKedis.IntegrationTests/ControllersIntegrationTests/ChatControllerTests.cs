@@ -123,7 +123,7 @@ namespace TrainingDivisionKedis.Tests.ControllersIntegrationTests
             return mockDbContextFactory;
         }
 
-        public static IFileService<ChatFilesConfiguration> SetupFileService(string directory = @"C:\Users\E7450\Downloads\VKR\TrainingDivisionKedis\TrainingDivisionKedis.BLL.Tests\bin\Debug\netcoreapp2.2\", int maxSize = 10000)
+        public static IFileService<ChatFilesConfiguration> SetupFileService(string directory = @"C:\Users\E7450\source\repos\TrainingDivision\TrainingDivisionKedis.BLL.Tests\bin\Debug\netcoreapp2.2\", int maxSize = 10000)
         {
             var filesConfiguration = new ChatFilesConfiguration { Directory = directory, MaxSize = maxSize };
             IOptions<ChatFilesConfiguration> options = Options.Create(filesConfiguration);
@@ -142,6 +142,10 @@ namespace TrainingDivisionKedis.Tests.ControllersIntegrationTests
         [Fact]
         public void Index_ShouldReturnView()
         {
+            var mockContextFactory = SetupContextFactory(null, null, null);
+            var fileService = SetupFileService();
+            var chatService = new TeacherChatService(mockContextFactory.Object, fileService, _mapper);
+            _sut = new ChatController(chatService);
             // Act           
             var response = _sut.Index();
 

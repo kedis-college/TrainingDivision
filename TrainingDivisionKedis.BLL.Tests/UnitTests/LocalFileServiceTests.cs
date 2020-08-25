@@ -36,7 +36,7 @@ namespace TrainingDivisionKedis.BLL.Tests
         public void GetFileBytes_ShouldReturnBytes()
         {
             // ARRANGE
-            var filesConfiguration = new FilesConfiguration { Directory = @"C:\Users\E7450\Downloads\VKR\TrainingDivisionKedis\TrainingDivisionKedis.BLL.Tests\bin\Debug\netcoreapp2.2\", MaxSize = 10000 };
+            var filesConfiguration = new FilesConfiguration { Directory = @"C:\Users\E7450\source\repos\TrainingDivision\TrainingDivisionKedis.BLL.Tests\bin\Debug\netcoreapp2.2\", MaxSize = 10000 };
             IOptions<FilesConfiguration> options = Options.Create(filesConfiguration);
             _sut = new LocalFileService<FilesConfiguration>(options);
 
@@ -51,7 +51,7 @@ namespace TrainingDivisionKedis.BLL.Tests
         public void GetFileBytes_ShouldThrowErrorWhenFileNotFound()
         {
             // ARRANGE
-            var path = @"C:\Users\E7450\Downloads\VKR\TrainingDivisionKedis\TrainingDivisionKedis.BLL.Tests\bin\Debug\netcoreapp2.2\";
+            var path = @"C:\Users\E7450\source\repos\TrainingDivision\TrainingDivisionKedis.BLL.Tests\bin\Debug\netcoreapp2.2\";
             var filesConfiguration = new FilesConfiguration { Directory = path, MaxSize = 10000 };
             IOptions<FilesConfiguration> options = Options.Create(filesConfiguration);
             _sut = new LocalFileService<FilesConfiguration>(options);
@@ -64,7 +64,7 @@ namespace TrainingDivisionKedis.BLL.Tests
         public async Task UploadAsync_ShouldReturnFileNameWhenFileLenghtIsLessThanMax()
         {
             // ARRANGE
-            var filesConfiguration = new FilesConfiguration { Directory = @"C:\Users\E7450\Downloads\VKR\TrainingDivisionKedis\TrainingDivisionKedis.BLL.Tests\bin\Debug\netcoreapp2.2\", MaxSize = 10000 };
+            var filesConfiguration = new FilesConfiguration { Directory = @"C:\Users\E7450\source\repos\TrainingDivision\TrainingDivisionKedis.BLL.Tests\bin\Debug\netcoreapp2.2\", MaxSize = 10000 };
             IOptions<FilesConfiguration> options = Options.Create(filesConfiguration);
             _sut = new LocalFileService<FilesConfiguration>(options);
 
@@ -94,7 +94,7 @@ namespace TrainingDivisionKedis.BLL.Tests
         public async Task UploadAsync_ShouldThrowExceptionWhenFileLenghtIsBiggerThanMax()
         {
             // ARRANGE
-            var filesConfiguration = new FilesConfiguration { Directory = @"C:\Users\E7450\Downloads\VKR\TrainingDivisionKedis\TrainingDivisionKedis.BLL.Tests\bin\Debug\netcoreapp2.2\", MaxSize = 10000 };
+            var filesConfiguration = new FilesConfiguration { Directory = @"C:\Users\E7450\source\repos\TrainingDivision\TrainingDivisionKedis.BLL.Tests\bin\Debug\netcoreapp2.2\", MaxSize = 10000 };
             IOptions<FilesConfiguration> options = Options.Create(filesConfiguration);
             _sut = new LocalFileService<FilesConfiguration>(options);
 
@@ -117,7 +117,7 @@ namespace TrainingDivisionKedis.BLL.Tests
         public async Task UploadAsync_ShouldReturnFileNameWhenFileLenghtIsEqualToMax()
         {
             // ARRANGE
-            var filesConfiguration = new FilesConfiguration { Directory = @"C:\Users\E7450\Downloads\VKR\TrainingDivisionKedis\TrainingDivisionKedis.BLL.Tests\bin\Debug\netcoreapp2.2\", MaxSize = 10000 };
+            var filesConfiguration = new FilesConfiguration { Directory = @"C:\Users\E7450\source\repos\TrainingDivision\TrainingDivisionKedis.BLL.Tests\bin\Debug\netcoreapp2.2\", MaxSize = 10000 };
             IOptions<FilesConfiguration> options = Options.Create(filesConfiguration);
             _sut = new LocalFileService<FilesConfiguration>(options);
 

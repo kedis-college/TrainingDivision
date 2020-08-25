@@ -23,6 +23,22 @@ namespace TrainingDivisionKedis.BLL.Services
             _contextFactory = contextFactory ?? throw new ArgumentNullException(nameof(contextFactory));
         }
 
+        public async Task<OperationDetails<string>> GetSubjectNameById(int id)
+        {
+            using (var context = _contextFactory.Create())
+            {
+                try
+                {
+                    var subject = await context.CurriculumQuery().GetNameById(id);
+                    return OperationDetails<string>.Success(subject?.Name);
+                }
+                catch (Exception ex)
+                {
+                    return OperationDetails<string>.Failure(ex.Message, ex.Source);
+                }
+            }
+        }
+
         public async Task<OperationDetails<List<SPSubjectsGetByStudent>>> GetSubjectsOfStudentAsync(GetSubjectsOfStudentRequest request)
         {
             using (var context = _contextFactory.Create())

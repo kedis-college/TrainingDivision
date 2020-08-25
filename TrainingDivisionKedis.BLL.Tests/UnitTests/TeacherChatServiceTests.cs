@@ -404,7 +404,7 @@ namespace TrainingDivisionKedis.BLL.Tests
             var actual = await _sut.CreateAsync(request);
 
             // ASSERT
-            Assert.Equal("Value cannot be null.\r\nParameter name: Recipients", actual.Error.Message);
+            Assert.Equal("Получатели не указаны", actual.Error.Message);
         }
 
         [Fact]

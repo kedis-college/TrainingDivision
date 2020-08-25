@@ -30,6 +30,8 @@ namespace TrainingDivisionKedis.BLL.DTO.TestsAdmin
         public short TimeLimit { get; set; }
         public int UserId { get; set; }
 
+        public string SubjectName { get; set; }
+
         public List<TestQuestionDto> Questions { get; set; }
     }
 }

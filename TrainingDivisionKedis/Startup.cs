@@ -9,13 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 using TrainingDivisionKedis.BLL.Common;
 using TrainingDivisionKedis.BLL.Services;
 using TrainingDivisionKedis.BLL.Contracts;
-using TrainingDivisionKedis.Core.Models;
 using TrainingDivisionKedis.DAL.ApplicationDbContext;
 using TrainingDivisionKedis.DAL.Contracts;
-using TrainingDivisionKedis.Common;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using TrainingDivisionKedis.Models;
-using Microsoft.Extensions.Logging;
 using TrainingDivisionKedis.Core.SPModels.Students;
 
 namespace TrainingDivisionKedis
@@ -70,10 +66,10 @@ namespace TrainingDivisionKedis
             services.AddScoped<IFileService<ChatFilesConfiguration>, LocalFileService<ChatFilesConfiguration>>();
             services.AddScoped<IFileService<UmkFilesConfiguration>, LocalFileService<UmkFilesConfiguration>>();
             services.AddScoped<ITestAdminService, TestAdminService>();
+            services.AddScoped<ICurriculumService, CurriculumService>();
 
             var mappingConfig = new MapperConfiguration(mc =>
             {
-                mc.AddProfile(new MappingProfile());
                 mc.AddProfile(new MappingProfileBLL());
             });
 

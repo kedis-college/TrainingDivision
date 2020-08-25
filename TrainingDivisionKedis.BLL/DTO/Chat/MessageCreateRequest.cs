@@ -19,7 +19,7 @@ namespace TrainingDivisionKedis.BLL.DTO.Chat
             if (Recipients.Length > 1000)
                 throw new ValidationException("Количество получателей должно быть максимум 1000", new MaxLengthAttribute(1000), Recipients);
             if (Text != null && Text.Length > 500)
-                throw new ValidationException("Длина сообщения должно быть менее 500 символов", new MaxLengthAttribute(500), Text);
+                throw new ValidationException("Длина сообщения должна быть менее 500 символов", new MaxLengthAttribute(500), Text);
         }
     }
 }

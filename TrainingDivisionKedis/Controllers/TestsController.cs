@@ -22,13 +22,15 @@ namespace TrainingDivisionKedis.Controllers
         private readonly ITermService _termService;
         private readonly IRaspredelenieService _raspredelenieService;
         private readonly ITestAdminService _testService;
+        private readonly ICurriculumService _curriculumService;
 
-        public TestsController(IYearService yearService, ITermService termService, IRaspredelenieService raspredelenieService, ITestAdminService testService)
+        public TestsController(IYearService yearService, ITermService termService, IRaspredelenieService raspredelenieService, ITestAdminService testService, ICurriculumService curriculumService)
         {
             _yearService = yearService ?? throw new ArgumentNullException(nameof(yearService));
             _termService = termService ?? throw new ArgumentNullException(nameof(termService));
             _raspredelenieService = raspredelenieService ?? throw new ArgumentNullException(nameof(raspredelenieService));
             _testService = testService ?? throw new ArgumentNullException(nameof(testService));
+            _curriculumService = curriculumService ?? throw new ArgumentNullException(nameof(curriculumService));
         }
 
         public async Task<IActionResult> Index()
@@ -76,7 +78,7 @@ namespace TrainingDivisionKedis.Controllers
                 return View(vm);
             }
             else
-                return View(vm).WithDanger("Ошибка!", response.Error.Message);
+                return NotFound();
         }
 
         [HttpPost]
@@ -90,9 +92,12 @@ namespace TrainingDivisionKedis.Controllers
                 return RedirectToAction("List", new { subjectId = model.SubjectId, termId = model.TermId }).WithDanger("Ошибка!",response.Error.Message) ;
         }
 
-        public IActionResult Create(int subjectId, byte termId)
+        public async Task<IActionResult> Create(int subjectId, byte termId)
         {
-            var model = new TestCreateDto {SubjectId = subjectId, TermId = termId };
+            var subjectResult = await _curriculumService.GetSubjectNameById(subjectId);
+            if (!subjectResult.Succedeed)
+                return NotFound();            
+            var model = new TestCreateDto {SubjectId = subjectId, TermId = termId, SubjectName = subjectResult.Entity };
             model.Questions.Add(new TestQuestionDto());
             model.Questions.Add(new TestQuestionDto());
             model.Questions.Add(new TestQuestionDto());
@@ -149,6 +154,10 @@ namespace TrainingDivisionKedis.Controllers
             {
                 if (!response.Entity.Draft)
                     return NotFound();
+                var subjectResult = await _curriculumService.GetSubjectNameById(response.Entity.SubjectId);
+                if (!subjectResult.Succedeed)
+                    return BadRequest();
+                ViewBag.SubjectName = subjectResult.Entity;
                 return View(response.Entity);
             }
             else

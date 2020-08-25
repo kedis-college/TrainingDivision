@@ -10,6 +10,8 @@
 
 <partial name="../Shared/_StatusMessages.cshtml" />
 
+<p><b>Дисциплина:</b> @ViewBag.SubjectName &emsp; <b>Семестр:</b> @Model.TermId </p>
+
 <form asp-action="Edit" id="test-form" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     @Html.HiddenFor(x => x.Id)
@@ -70,7 +72,7 @@
         <button class="btn btn-success" id="add-question-btn">Добавить вопрос</button>
     </div>
     <div class="form-group">
-        <input type="submit" value="Сохранить изменения" class="btn btn-primary" /> <a class="btn btn-secondary" asp-action="List" asp-route-subjectId="@Model.SubjectId" asp-route-termId="@Model.TermId">Отменить</a>
+        <input type="submit" value="Сохранить изменения" class="btn btn-primary" /> 
     </div>
 
 </form>

@@ -11,5 +11,6 @@ namespace TrainingDivisionKedis.BLL.Contracts
     public interface ICurriculumService
     {
         Task<OperationDetails<List<SPSubjectsGetByStudent>>> GetSubjectsOfStudentAsync(GetSubjectsOfStudentRequest request);
+        Task<OperationDetails<string>> GetSubjectNameById(int id);
     }
 }

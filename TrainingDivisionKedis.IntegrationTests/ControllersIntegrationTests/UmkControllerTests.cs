@@ -62,7 +62,7 @@ namespace TrainingDivisionKedis.Tests.ControllersIntegrationTests
             };
         }
 
-        public static IFileService<UmkFilesConfiguration> SetupFileService(string directory = @"C:\Users\E7450\Downloads\VKR\TrainingDivisionKedis\TrainingDivisionKedis.BLL.Tests\bin\Debug\netcoreapp2.2\", int maxSize = 10000)
+        public static IFileService<UmkFilesConfiguration> SetupFileService(string directory = @"C:\Users\E7450\source\repos\TrainingDivision\TrainingDivisionKedis.BLL.Tests\bin\Debug\netcoreapp2.2\", int maxSize = 10000)
         {
             var filesConfiguration = new UmkFilesConfiguration { Directory = directory, MaxSize = maxSize };
             IOptions<UmkFilesConfiguration> options = Options.Create(filesConfiguration);

@@ -89,15 +89,8 @@ namespace TrainingDivisionKedis.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Неверный логин или пароль.");
+                    ModelState.AddModelError("", result.Error.Message);
                 }
-                //await _signInManager.SignOutAsync();
-                //var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
-                //if (result.Succeeded)
-                //    return RedirectToLocal(returnUrl);
-                //else
-                //    ModelState.AddModelError("", "Неверный логин или пароль.");
-
             }
             return View(model);
         }

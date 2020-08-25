@@ -11,6 +11,8 @@
 
 <partial name="../Shared/_StatusMessages.cshtml" />
 
+<p><b>Дисциплина:</b> @Model.SubjectName &emsp; <b>Семестр:</b> @Model.TermId </p>
+
 <form asp-action="Create" id="test-form" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     @Html.HiddenFor(x => x.SubjectId)

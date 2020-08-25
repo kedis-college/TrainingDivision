@@ -77,7 +77,7 @@ namespace TrainingDivisionKedis.Controllers
                 return View(vm);
             }
             else
-                return View(vm).WithDanger("Ошибка!", response.Error.Message);
+                return NotFound();
         }
 
         [HttpPost]
